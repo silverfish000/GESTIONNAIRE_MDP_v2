@@ -10,9 +10,10 @@ class Crypto:
             lettre_cle = self.cle[i % len(self.cle)]
             nouvelle_lettre = chr(ord(lettre) ^ ord(lettre_cle))
             mdp_chiffre += nouvelle_lettre
-        return mdp_chiffre
+        return base64.b64encode(mdp_chiffre.encode("latin-1")).decode()
             
     def dechiffrer(self, texte_chiffre) :
+        texte_chiffre = base64.b64decode(texte_chiffre.encode()).decode("latin-1")
         mdp_dechiffre = ''
         for i in range(len(texte_chiffre)) :
             lettre = texte_chiffre[i]
