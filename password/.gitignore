@@ -10,6 +10,7 @@ passwords.json
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyc
 .Python
 venv/
 env/
