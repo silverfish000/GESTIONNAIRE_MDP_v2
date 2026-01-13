@@ -22,4 +22,12 @@ Technologies :
 - cryptography (chiffrement Fernet)
 - JSON (stockage)
 
-Projet realise par Silver
+POO (Architecture du programme):
+
+Password        --> UN mot de passe (nom, mdp, url, notes, dates)
+User            --> UN utilisateur (pseudo, mot de passe maitre hashe)
+PasswordManager --> Gere la collection de mots de passe (CRUD + sauvegarde JSON)
+Validator       --> Valide les mots de passe selon les regles
+Generator       --> Genere des mots de passe aleatoires
+Crypto          --> Chiffre/dechiffre les donnees
+App             --> Gere les menus CLI et le flux de l'application
