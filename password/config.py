@@ -5,12 +5,12 @@ dictionnaire_interdits = {
     'mdp_interdits' : [
         "", "admin", "system", "root", "config",
         "settings", "test", "temp", "default",
-        "clear", "Silver", "Password", "12345678", "qwerty",
+        "clear", "silver", "password", "12345678", "qwerty",
         "letmein", "welcome", "monkey", "abc123", "football", "iloveyou", "admin123",
-        "password1", "12345", "123456789", "1234567890", "password!", "Passw0rd", "Admin@123",
-        "Qwerty123", "Welcome1", "LetMeIn!", "Monkey@1", "Football!", "ILoveYou1",
-        "1234abcd", "abcd1234", "Temp@1234", "Default1!", "Clear@2024",
-        "Silver2024!", "Password2024#", "Admin2024$"
+        "password1", "12345", "123456789", "1234567890", "password!", "passw0rd", "admin@123",
+        "qwerty123", "welcome1", "letmein!", "monkey@1", "football!", "iloveyou1",
+        "1234abcd", "abcd1234", "temp@1234", "default1!", "clear@2024",
+        "silver2024!", "password2024#", "admin2024$"
     ]
 }
 
