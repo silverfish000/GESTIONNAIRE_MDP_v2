@@ -1,8 +1,7 @@
-
-# Les dictionnaires interdits (mdp, pseudos...)
-dictionnaire_interdits = {
-    # Les mots interdits de bases mais on pourra en rajouter autant qu'on veut avec le statut ADMIN
-    'mdp_interdits' : [
+# Forbidden dictionaries (passwords, usernames...)
+forbidden_dictionary = {
+    # Basic forbidden words, more can be added later with ADMIN status
+    'forbidden_passwords': [
         "", " ", "admin", "system", "root", "config",
         "settings", "test", "temp", "default",
         "clear", "silver", "password", "12345678", "qwerty",
@@ -14,7 +13,10 @@ dictionnaire_interdits = {
     ]
 }
 
-CARACTERES_SPECIAUX = "!@#$%^&*()_+-=}{[]|\:;<>?'\",./`~"
+SPECIAL_CHARACTERS = "!@#$%^&*()_+-=}{[]|\\:;<>?'\",./`~"
 
-USERS_DATA = "data/users.json"
-MDP_DATA = "data/mdp.json"
+USERS_DATA_PATH = "data/users.json"
+PASSWORDS_DATA_PATH = "data/mdp.json"
+
+
+# _0_

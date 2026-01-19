@@ -1,31 +1,35 @@
 import base64
 
+
 class Crypto:
-    def __init__(self, cle):
-        self.cle = cle
-    def chiffrer(self, texte):
-        password_chiffre = ''
-        for i in range(len(texte)) :
-            lettre = texte[i]
-            lettre_cle = self.cle[i % len(self.cle)]
-            nouvelle_lettre = chr(ord(lettre) ^ ord(lettre_cle))
-            password_chiffre  += nouvelle_lettre
-        return base64.b64encode(password_chiffre.encode("latin-1")).decode()
-            
-    def dechiffrer(self, texte_chiffre) :
-        texte_chiffre = base64.b64decode(texte_chiffre.encode()).decode("latin-1")
-        mdp_dechiffre = ''
-        for i in range(len(texte_chiffre)) :
-            lettre = texte_chiffre[i]
-            lettre_cle = self.cle[i % len(self.cle)]
-            nouvelle_lettre = chr(ord(lettre) ^ ord(lettre_cle))
-            mdp_dechiffre += nouvelle_lettre
-        return mdp_dechiffre
+    def __init__(self, key):
+        self.key = key
+
+    def encrypt(self, text):
+        encrypted_password = ''
+        for i in range(len(text)):
+            letter = text[i]
+            key_letter = self.key[i % len(self.key)]
+            new_letter = chr(ord(letter) ^ ord(key_letter))
+            encrypted_password += new_letter
+        return base64.b64encode(encrypted_password.encode("latin-1")).decode()
+
+    def decrypt(self, encrypted_text):
+        encrypted_text = base64.b64decode(encrypted_text.encode()).decode("latin-1")
+        decrypted_password = ''
+        for i in range(len(encrypted_text)):
+            letter = encrypted_text[i]
+            key_letter = self.key[i % len(self.key)]
+            new_letter = chr(ord(letter) ^ ord(key_letter))
+            decrypted_password += new_letter
+        return decrypted_password
 
 
-mon_crypto = Crypto("MonMotDePasse123")
-resultat = mon_crypto.chiffrer("Laviedemameremetrouvepas")
+my_crypto = Crypto("MonMotDePasse123")
+result = my_crypto.encrypt("Laviedemameremetrouvepas")
 
-print(f"Voici ton mot de passe chiffre : '{resultat}'")
-resultat_dechiffrer = mon_crypto.dechiffrer(resultat)
-print(f"Voici ton mot de passe dechiffre : '{resultat_dechiffrer}'")
+print(f"Voici ton mot de passe chiffre : '{result}'")
+decrypted_result = my_crypto.decrypt(result)
+print(f"Voici ton mot de passe dechiffre : '{decrypted_result}'")
+
+# _0_

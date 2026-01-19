@@ -1,50 +1,54 @@
-from config import CARACTERES_SPECIAUX, dictionnaire_interdits
+from config import SPECIAL_CHARACTERS, forbidden_dictionary
+
 
 class Validator:
     def __init__(self):
         pass
 
-    def valider(self, mdp):
-        if (mdp.lower() in dictionnaire_interdits['mdp_interdits']) : 
-            return False, f"ERREUR : '{mdp}' est interdit"
-            
-        if (len(mdp) < 8) :
+    def validate(self, password):
+        if password.lower() in forbidden_dictionary['forbidden_passwords']:
+            return False, f"ERREUR : '{password}' est interdit"
+
+        if len(password) < 8:
             return False, "ERREUR : Mot de passe trop court"
 
-        majuscule_find = False
-        for lettre in mdp :
-            if (lettre.isupper()) :
-                majuscule_find = True
+        uppercase_found = False
+        for char in password:
+            if char.isupper():
+                uppercase_found = True
                 break
-        if (not majuscule_find) :
+        if not uppercase_found:
             return False, "ERREUR : Le mot de passe doit contenir au moins une majuscule"
-        
-        minuscule_find = False
-        for lettre in mdp :
-            if (lettre.islower()) :
-                minuscule_find = True
+
+        lowercase_found = False
+        for char in password:
+            if char.islower():
+                lowercase_found = True
                 break
-        if (not minuscule_find) :
+        if not lowercase_found:
             return False, "ERREUR : Le mot de passe doit contenir au moins une minuscule"
-        
-        chiffre_find = False
-        for lettre in mdp :
-            if (lettre.isdigit()) :
-                chiffre_find = True
+
+        digit_found = False
+        for char in password:
+            if char.isdigit():
+                digit_found = True
                 break
-        if (not chiffre_find) :
+        if not digit_found:
             return False, "ERREUR : Le mot de passe doit contenir au moins un chiffre"
-        
-        caracteres_speciaux_find = False
-        for lettre in mdp :
-            if (lettre in CARACTERES_SPECIAUX) :
-                caracteres_speciaux_find = True
+
+        special_character_found = False
+        for char in password:
+            if char in SPECIAL_CHARACTERS:
+                special_character_found = True
                 break
-        if (not caracteres_speciaux_find) :
+        if not special_character_found:
             return False, "ERREUR : Le mot de passe doit contenir au moins un caractere special"
-        
+
         return True, "Mot de passe valide"
 
-validee = Validator()
-resultat = validee.valider("Silver")
-print(resultat)
+
+validator = Validator()
+result = validator.validate("Silver")
+print(result)
+
+# _0_
