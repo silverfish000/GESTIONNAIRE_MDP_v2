@@ -14,9 +14,11 @@ forbidden_dictionary = {
 }
 
 SPECIAL_CHARACTERS = "!@#$%^&*()_+-=}{[]|\\:;<>?'\",./`~"
+LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
+UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+DIGITS = "0123456789"
 
 USERS_DATA_PATH = "data/users.json"
 PASSWORDS_DATA_PATH = "data/mdp.json"
-
 
 # _0_

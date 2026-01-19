@@ -49,6 +49,5 @@ class Validator:
 
 validator = Validator()
 result = validator.validate("Silver")
-print(result)
 
 # _0_
