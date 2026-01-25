@@ -19,6 +19,6 @@ UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 DIGITS = "0123456789"
 
 USERS_DATA_PATH = "data/users.json"
-PASSWORDS_DATA_PATH = "data/mdp.json"
+PASSWORDS_FILE = "data/mdp.json"
 
 # _0_
