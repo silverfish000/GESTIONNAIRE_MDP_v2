@@ -1,5 +1,9 @@
 from services.manager import Manager
-import sys
+import os
+import time
+
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 class PasswordApp:
@@ -16,7 +20,9 @@ class PasswordApp:
         
         self.manager = Manager(master_password)
         
-        print("Authentifie avec succes !\n")
+        print("Authentifie avec succes !")
+        time.sleep(1)
+        clear()
         
         while self.running:
             self.show_menu()
@@ -35,6 +41,7 @@ class PasswordApp:
     
     def handle_choice(self):
         choice = input("\nVotre choix : ")
+        clear()
         
         if choice == "1":
             self.add_password()
@@ -48,6 +55,7 @@ class PasswordApp:
             self.quit_app()
         else:
             print("Choix invalide")
+            time.sleep(1)
     
     def add_password(self):
         print("\n--- AJOUTER UN MOT DE PASSE ---")
@@ -65,7 +73,9 @@ class PasswordApp:
         if password:
             print(f"\nMot de passe enregistre !")
             print(f"NOTEZ-LE : {password}")
-            input("\nAppuyez sur Entree pour continuer...")
+        
+        input("\nAppuyez sur Entree pour continuer...")
+        clear()
     
     def get_password(self):
         print("\n--- RECUPERER UN MOT DE PASSE ---")
@@ -77,7 +87,9 @@ class PasswordApp:
             print(f"\nService  : {info['service']}")
             print(f"Username : {info['username']}")
             print(f"Password : {info['password']}")
-            input("\nAppuyez sur Entree pour continuer...")
+        
+        input("\nAppuyez sur Entree pour continuer...")
+        clear()
     
     def list_passwords(self):
         print("\n--- LISTE DES SERVICES ---")
@@ -89,6 +101,7 @@ class PasswordApp:
                 print(f"  - {s['service']} ({s['username']})")
         
         input("\nAppuyez sur Entree pour continuer...")
+        clear()
     
     def delete_password(self):
         print("\n--- SUPPRIMER UN MOT DE PASSE ---")
@@ -98,13 +111,21 @@ class PasswordApp:
         
         if confirm.lower() == "o":
             self.manager.delete(service)
-            input("\nAppuyez sur Entree pour continuer...")
+        
+        input("\nAppuyez sur Entree pour continuer...")
+        clear()
     
     def quit_app(self):
-        print("\nAu revoir !")
+        print("\nAu revoir mon bro !!!")
+        time.sleep(1)
+        clear()
         self.running = False
 
 
 if __name__ == "__main__":
     app = PasswordApp()
     app.start()
+
+
+
+# _0_
