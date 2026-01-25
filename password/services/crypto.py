@@ -28,8 +28,4 @@ class Crypto:
 my_crypto = Crypto("MonMotDePasse123")
 result = my_crypto.encrypt("Laviedemameremetrouvepas")
 
-print(f"Voici ton mot de passe chiffre : '{result}'")
-decrypted_result = my_crypto.decrypt(result)
-print(f"Voici ton mot de passe dechiffre : '{decrypted_result}'")
-
 # _0_

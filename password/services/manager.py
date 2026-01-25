@@ -50,13 +50,15 @@ class Manager:
         
         self._save_passwords(passwords)
         print(f"Mot de passe '{password}' ajoute et chiffre dans le gestionnaire")
-        return True
+        return password
         
 
 if __name__ == "__main__":
     manager = Manager("MonMotDePasse123")
     print("Manager init !")
 
-
+pwd = manager.add("Test", "test@gmail.com")
+if pwd:
+    print(f"💾 Note ce mot de passe : {pwd}")
 
 # _0_
