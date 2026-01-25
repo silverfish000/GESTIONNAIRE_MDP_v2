@@ -18,7 +18,7 @@ class Manager:
                 file.close()
                 return data
             except json.JSONDecodeError:
-                print("Fichier non existant")
+                print("Fichier JSON corrompu/inexistant")
                 return {}
         else:
             return {}
@@ -30,7 +30,28 @@ class Manager:
         file = open(PASSWORDS_FILE, "w")
         json.dump(passwords_dict, file, indent=4)
         file.close()
-            
+    def add(self, service, username, password=None):
+        if password is None:
+            password = Generator.generate()
+        is_valid, message_validator = self.validator.validate(password)
+        if not is_valid:
+            print(message_validator)
+            return None
+        passwords = self._load_password()
+        if service in passwords:
+            print("Service deja existant")
+            return None
+
+        encrypted_password = self.crypto.encrypt(password)
+        passwords[service] = {
+            "useranme": username,
+            "password": encrypted_password
+        }
+        
+        self._save_passwords(passwords)
+        print(f"Mot de passe '{password}' ajoute et chiffre dans le gestionnaire")
+        return True
+        
 
 if __name__ == "__main__":
     manager = Manager("MonMotDePasse123")
