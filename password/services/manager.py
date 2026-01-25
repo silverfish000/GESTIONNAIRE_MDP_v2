@@ -10,7 +10,8 @@ class Manager:
         self.master_password = master_password
         self.crypto = Crypto(master_password)
         self.validator = Validator()
-    def _load_password(self) :
+    
+    def _load_password(self):
         if os.path.exists(PASSWORDS_FILE):
             try:
                 file = open(PASSWORDS_FILE, 'r')
@@ -18,47 +19,74 @@ class Manager:
                 file.close()
                 return data
             except json.JSONDecodeError:
-                print("Fichier JSON corrompu/inexistant")
+                print("Fichier JSON corrompu")
                 return {}
         else:
             return {}
+    
     def _save_passwords(self, passwords_dict):
         directory = os.path.dirname(PASSWORDS_FILE)
-
         if not os.path.exists(directory):
             os.makedirs(directory)
         file = open(PASSWORDS_FILE, "w")
         json.dump(passwords_dict, file, indent=4)
         file.close()
+    
     def add(self, service, username, password=None):
         if password is None:
             password = Generator.generate()
+        
         is_valid, message_validator = self.validator.validate(password)
         if not is_valid:
-            print(message_validator)
+            print(f"❌ {message_validator}")
             return None
+        
         passwords = self._load_password()
+        
         if service in passwords:
-            print("Service deja existant")
+            print(f"❌ Service '{service}' existe déjà")
             return None
-
+        
         encrypted_password = self.crypto.encrypt(password)
         passwords[service] = {
-            "useranme": username,
+            "username": username,
             "password": encrypted_password
         }
         
         self._save_passwords(passwords)
-        print(f"Mot de passe '{password}' ajoute et chiffre dans le gestionnaire")
+        print(f"Mot de passe ajoute pour '{service}'")
         return password
+    
+    def get(self, service):
+        passwords = self._load_password()
         
+        if service not in passwords:
+            print(f"❌ Service '{service}' introuvable")
+            return None
+        
+        data = passwords[service]
+        decrypted_password = self.crypto.decrypt(data["password"])
+        
+        return {
+            "service": service,
+            "username": data["username"],
+            "password": decrypted_password
+        }
+
 
 if __name__ == "__main__":
-    manager = Manager("MonMotDePasse123")
-    print("Manager init !")
-
-pwd = manager.add("Test", "test@gmail.com")
-if pwd:
-    print(f"💾 Note ce mot de passe : {pwd}")
+    manager = Manager("MonMotDePasse123!")
+    
+    # TEST POUR ADD
+    pwd = manager.add("Google", "test@gmail.com")
+    if pwd:
+        print(f"Mot de passe ajouté : {pwd}")
+    
+    # TEST POUR GET
+    info = manager.get("Google")
+    if info:
+        print(f"\nRecuperation du service '{info['service']}' :")
+        print(f"   Username: {info['username']}")
+        print(f"   Password: {info['password']}")
 
 # _0_
