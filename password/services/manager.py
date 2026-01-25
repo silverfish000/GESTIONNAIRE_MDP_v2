@@ -72,6 +72,38 @@ class Manager:
             "username": data["username"],
             "password": decrypted_password
         }
+    def list_all(self):
+        passwords = self._load_password()
+        
+        if not passwords:
+            print("Aucun mot de passe enregistré")
+            return [] # En gros je return rien (dico)
+        
+
+        services = []
+        for service, data in passwords.items():
+            services.append({
+                "service": service,
+                "username": data["username"]
+            })
+        
+        return services
+    def delete(self, service):
+        passwords = self._load_password()
+        
+        if service not in passwords:
+            print(f"Service '{service}' introuvable")
+            return False
+        
+        new_passwords = {}
+        for key, value in passwords.items():
+            if key != service:
+                new_passwords[key] = value
+        
+        self._save_passwords(new_passwords)
+        
+        print(f"'{service}' supprimé")
+        return True
 
 
 if __name__ == "__main__":
