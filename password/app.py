@@ -59,34 +59,63 @@ class PasswordApp:
     
     def add_password(self):
         print("\n--- AJOUTER UN MOT DE PASSE ---")
-        service = input("Nom du service : ")
+        
+        while True:
+            service = input("Nom du service : ")
+            passwords = self.manager._load_password()
+            
+            service_lower = service.lower()
+            existing_services_lower = {key.lower(): key for key in passwords.keys()}
+            
+            if service_lower in existing_services_lower:
+                print(f"Service deja existant sous le nom '{existing_services_lower[service_lower]}', choisissez un autre nom")
+                time.sleep(1)
+                continue
+            else:
+                break
+        
         username = input("Nom d'utilisateur : ")
         
-        choice = input("Generer un mot de passe ? (o/n) : ")
-        
-        if choice.lower() == "o":
-            password = self.manager.add(service, username)
-        else:
-            password_input = input("Mot de passe : ")
-            password = self.manager.add(service, username, password_input)
-        
-        if password:
-            print(f"\nMot de passe enregistre !")
-            print(f"NOTEZ-LE : {password}")
-        
-        input("\nAppuyez sur Entree pour continuer...")
-        clear()
-    
+        while True:
+            choice = input("Generer un mot de passe ? (o/n) : ")
+            
+            if choice.lower() == "o":
+                password = self.manager.add(service, username)
+            elif choice.lower() == 'n':
+                password_input = input("Mot de passe : ")
+                password = self.manager.add(service, username, password_input)
+            else:
+                print("ONLY : o/n")
+                continue
+            
+            if password:
+                print(f"\nMot de passe enregistre !")
+                print(f"NOTEZ-LE : {password}")
+                input("\nAppuyez sur Entree pour continuer...")
+                clear()
+                break
+            else:
+                time.sleep(2)
+                clear()
+
     def get_password(self):
         print("\n--- RECUPERER UN MOT DE PASSE ---")
-        service = input("Nom du service : ")
+        service_input = input("Nom du service : ")
         
-        info = self.manager.get(service)
+        passwords = self.manager._load_password()
+        service_lower = service_input.lower()
+        existing_services_lower = {key.lower(): key for key in passwords.keys()}
         
-        if info:
-            print(f"\nService  : {info['service']}")
-            print(f"Username : {info['username']}")
-            print(f"Password : {info['password']}")
+        if service_lower in existing_services_lower:
+            real_service = existing_services_lower[service_lower]
+            info = self.manager.get(real_service)
+            
+            if info:
+                print(f"\nService  : {info['service']}")
+                print(f"Username : {info['username']}")
+                print(f"Password : {info['password']}")
+        else:
+            print(f"Service '{service_input}' introuvable")
         
         input("\nAppuyez sur Entree pour continuer...")
         clear()
@@ -105,12 +134,20 @@ class PasswordApp:
     
     def delete_password(self):
         print("\n--- SUPPRIMER UN MOT DE PASSE ---")
-        service = input("Nom du service : ")
+        service_input = input("Nom du service : ")
         
-        confirm = input(f"Confirmer la suppression de '{service}' ? (o/n) : ")
+        passwords = self.manager._load_password()
+        service_lower = service_input.lower()
+        existing_services_lower = {key.lower(): key for key in passwords.keys()}
         
-        if confirm.lower() == "o":
-            self.manager.delete(service)
+        if service_lower in existing_services_lower:
+            real_service = existing_services_lower[service_lower]
+            confirm = input(f"Confirmer la suppression de '{real_service}' ? (o/n) : ")
+            
+            if confirm.lower() == "o":
+                self.manager.delete(real_service)
+        else:
+            print(f"Service '{service_input}' introuvable")
         
         input("\nAppuyez sur Entree pour continuer...")
         clear()
@@ -125,7 +162,5 @@ class PasswordApp:
 if __name__ == "__main__":
     app = PasswordApp()
     app.start()
-
-
 
 # _0_
